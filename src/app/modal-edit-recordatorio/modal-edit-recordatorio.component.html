@@ -1,0 +1,22 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="danger" (click)="cancel()">Cancelar</ion-button>
+    </ion-buttons>
+    <ion-title>Recordatorio nuevo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true" [disabled]="recordatorioForm.invalid">Aceptar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="recordatorioForm">
+    <ion-item>
+      <ion-input labelPlacement="stacked" label="Titulo" formControlName="Titulo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input labelPlacement="stacked" label="Contenido" formControlName="Contenido"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>

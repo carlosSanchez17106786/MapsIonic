@@ -1,20 +1,76 @@
+
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
-      Blank
+      Agrega una nueva ruta
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="rutaForm">
+    <ion-item>
+      <ion-input
+        label="Nombre"
+        labelPlacement="stacked"
+        [clearOnEdit]="true"
+        placeholder="Nombre que tendrá la nueva ruta"
+        formControlName="Nombre"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        label="Descripción"
+        labelPlacement="stacked"
+        [clearOnEdit]="true"
+        placeholder="Descripción que tendrá la nueva ruta"
+        formControlName="Descripcion"
+      >
+      </ion-input>
+    </ion-item>
+  </form>
+  <ion-list>
+    <ion-list-header>
+      <ion-label class="tituloRuta">Ubicaciones de la ruta</ion-label>
+      <ion-button (click)="openModal()" size="small" fill="solid" class="agregarRuta" [disabled]="isMovingRute">
+        Agregar
+        <ion-icon slot="start" name="add-outline"></ion-icon>
+      </ion-button>
+      <ng-container *ngIf="!isMovingRute">
+        <ion-button (click)="movingRutes(true)" size="small" fill="solid" class="agregarRuta" [disabled]="ubicacionesArray.length < 2">
+          Reordenar
+          <ion-icon slot="start" name="move-outline"></ion-icon>
+        </ion-button>
+      </ng-container>
+      <ng-container *ngIf="isMovingRute">
+        <ion-button (click)="movingRutes(false)" size="small" fill="solid" class="agregarRuta">
+          Confirmar
+          <ion-icon slot="start" name="move-outline"></ion-icon>
+        </ion-button>
+      </ng-container>
+    </ion-list-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <ng-container *ngIf="ubicacionesArray.length > 0">
+      <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+        <ng-container *ngFor="let ubication of ubicacionesArray">
+          <ion-item>
+            <ion-icon name="locate-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h1>{{ubication.Nombre}}</h1>
+              <p class="ion-text-wrap">{{ubication.FullAdress}}</p>
+            </ion-label>
+      
+            <ng-container *ngIf="isMovingRute">
+              <ion-reorder slot="end"></ion-reorder>
+            </ng-container>
+          </ion-item>
+        </ng-container>
+          
+      </ion-reorder-group>
+    </ng-container>
+  </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-button expand="full" [disabled]="rutaForm.invalid || ubicacionesArray.length == 0" (click)="agregarRuta()">Agregar ruta</ion-button>
+</ion-footer>

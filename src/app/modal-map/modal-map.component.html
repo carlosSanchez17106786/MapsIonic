@@ -1,0 +1,81 @@
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()" color="danger">Cancelar</ion-button>
+        </ion-buttons>
+        <ion-title >Agrega una ubicación</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [strong]="true" (click)="confirm()" [disabled]="pointForm.invalid">Aceptar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">     
+      <!-- <div id="mapId" style="width: 60%; height: 90%;">
+      </div> -->
+      <ion-grid style="height: 100%;">
+        <ion-row style="min-height: 60%; margin-bottom: 5em;">
+          <ion-col size="12">
+            <div id="mapId" style="width: 100%; height: 100%;">
+            </div>
+            <ng-container *ngIf="fullAdress != '' && fullAdress != null">
+              <ion-item>
+                <ion-icon name="location-outline" slot="start"></ion-icon>
+                <ion-label class="ion-text-wrap">
+                  {{fullAdress }}
+                </ion-label>
+              </ion-item>
+            </ng-container>
+            <ion-button  expand="block" (click)="getCurrentCoordinates()">
+              Mi ubicación
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row  style="max-height: 50%;">
+          
+          <ion-col size = "12">
+            <form [formGroup]="pointForm">
+              <ion-item>
+                <ion-input
+                  label="Nombre de ubicación"
+                  labelPlacement="stacked"
+                  [clearOnEdit]="true"
+                  placeholder="Agrega un alias a el punto que quieres registrar"
+                  formControlName="Nombre"
+                >
+                </ion-input>
+              </ion-item>
+        
+            </form>
+            <ion-list>
+              <ion-list-header>
+                <ion-label>Recordatorios de tu ubicación</ion-label>
+                <ion-button (click)="openAgregarRecordatorio()">Agregar</ion-button>
+              </ion-list-header>
+              <ng-container *ngIf="recordatorios.length > 0">
+                <ng-container *ngFor="let recordatorio of recordatorios">
+                  <ion-item>
+
+                    <ion-label>
+                      <h1>{{recordatorio.Titulo}}</h1>
+                      <p>{{recordatorio.Contenido}}</p>
+                    </ion-label>
+                    <!-- <ion-button>
+                      <ion-icon name="create-outline"></ion-icon>        
+                    </ion-button> -->
+                    <ion-button color="danger" (click)="deleteRecordatorio(recordatorio)">
+                      <ion-icon name="trash-outline"></ion-icon>         
+                    </ion-button>
+                  </ion-item>
+                </ng-container>
+              </ng-container> 
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+ 
+    </ion-content>
+
+
+
